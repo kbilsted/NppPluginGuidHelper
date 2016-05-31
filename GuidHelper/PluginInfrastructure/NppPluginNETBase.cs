@@ -37,11 +37,18 @@ namespace Kbg.NppPluginNET
             _funcItems.Add(funcItem);
         }
 
-        internal static IntPtr GetCurrentScintilla()
+        public static IntPtr GetCurrentScintilla()
         {
             int curScintilla;
             Win32.SendMessage(nppData._nppHandle, NppMsg.NPPM_GETCURRENTSCINTILLA, 0, out curScintilla);
             return (curScintilla == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
         }
+
+		static readonly Func<IScintillaGateway> gatewayFactory = () => new ScintillaGateway(GetCurrentScintilla());
+
+		public static Func<IScintillaGateway> GetGatewayFactory()
+	    {
+		    return gatewayFactory;
+	    }
     }
 }
