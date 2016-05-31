@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Kbg.NppPluginNET;
 
-namespace GuidHelper
+namespace Kbg.NppPluginNET.GuidHelper
 {
 	class InsertGuid
 	{
-		private readonly ScintillaGateway scintilla;
+		private readonly IScintillaGateway scintilla;
 
-		public InsertGuid(ScintillaGateway scintilla)
+		public InsertGuid(IScintillaGateway scintilla)
 		{
 			this.scintilla = scintilla;
 		}
