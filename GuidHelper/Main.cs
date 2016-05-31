@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using Kbg.NppPluginNET.PluginInfrastructure;
-using GuidHelper;
+using Kbg.NppPluginNET.GuidHelper;
 
 namespace Kbg.NppPluginNET
 {
@@ -8,9 +8,11 @@ namespace Kbg.NppPluginNET
     {
         internal const string PluginName = "&GuidHelper";
 
-        public static void OnNotification(ScNotification notification)
-        {  
-            // This method is invoked whenever something is happening in notepad++
+	    static readonly SelectWholeGuidIfStartOrEndIsSelected selectWholeGuidIfStartOrEndIsSelected = new SelectWholeGuidIfStartOrEndIsSelected(PluginBase.GetGatewayFactory());
+
+		public static void OnNotification(ScNotification notification)
+        {
+	        selectWholeGuidIfStartOrEndIsSelected.Execute(notification);
         }
 
         internal static void CommandMenuInit()
