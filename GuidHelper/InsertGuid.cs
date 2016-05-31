@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Kbg.NppPluginNET;
 
 namespace GuidHelper
 {
-	public static class GuidHelperConstants
-	{
-		public static readonly int Regexlength = 36;
-	}
-
 	class InsertGuid
 	{
 		private readonly ScintillaGateway scintilla;
