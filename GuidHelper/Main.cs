@@ -4,33 +4,48 @@ using Kbg.NppPluginNET.GuidHelper;
 
 namespace Kbg.NppPluginNET
 {
-    class Main
-    {
-        internal const string PluginName = "&GuidHelper";
+	class Main
+	{
+		internal const string PluginName = "&GuidHelper";
 
-	    static readonly SelectWholeGuidIfStartOrEndIsSelected selectWholeGuidIfStartOrEndIsSelected = new SelectWholeGuidIfStartOrEndIsSelected(PluginBase.GetGatewayFactory());
+		static readonly SelectWholeGuidIfStartOrEndIsSelected selectWholeGuidIfStartOrEndIsSelected =
+			new SelectWholeGuidIfStartOrEndIsSelected(PluginBase.GetGatewayFactory());
 
 		public static void OnNotification(ScNotification notification)
-        {
-	        selectWholeGuidIfStartOrEndIsSelected.Execute(notification);
-        }
+		{
+			selectWholeGuidIfStartOrEndIsSelected.Execute(notification);
+		}
 
-        internal static void CommandMenuInit()
-        {
-            PluginBase.SetCommand(0, "&Insert Guid", InsertGuid, new ShortcutKey(false, false, false, Keys.None));
-        }
+		internal static void CommandMenuInit()
+		{
+			PluginBase.SetCommand(0, "&Insert Guid", InsertGuid, new ShortcutKey(false, false, false, Keys.None));
+			PluginBase.SetCommand(1, "&About GuidHelper", ShowAbout, new ShortcutKey(false, false, false, Keys.None));
+		}
 
-        internal static void SetToolBarIcon()
-        {
-        }
+		private static void ShowAbout()
+		{
+			var message = @"Version: 1.0
 
-        internal static void PluginCleanUp()
-        {
-        }
+License: This is freeware (Apache v2.0 license).
 
-	    internal static void InsertGuid()
-	    {
-		    new InsertGuid(new ScintillaGateway(PluginBase.GetCurrentScintilla())).Execute();
-	    }
-    }
+Author: Kasper B. Graversen 2016-
+
+Website: https://github.com/kbilsted/NppPluginGuidHelper";
+
+			MessageBox.Show("GuidHelper plugin", message, MessageBoxButtons.OK);
+		}
+
+		internal static void SetToolBarIcon()
+		{
+		}
+
+		internal static void PluginCleanUp()
+		{
+		}
+
+		internal static void InsertGuid()
+		{
+			new InsertGuid(new ScintillaGateway(PluginBase.GetCurrentScintilla())).Execute();
+		}
+	}
 }
