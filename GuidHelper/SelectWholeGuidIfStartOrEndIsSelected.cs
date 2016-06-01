@@ -42,10 +42,8 @@ namespace Kbg.NppPluginNET.GuidHelper
 			{
 				case GuidHelperConstants.StartPartOfGuidLength:
 				{
-					var isGuid = GuidHelperConstants.GuidRex.IsMatch(lineContent, relativeLineOfset);
-					var canLineFitAGuid = lineContent.Length >= GuidHelperConstants.Regexlength + relativeLineOfset;
-
-					if (!canLineFitAGuid || !isGuid)
+					var isMatch = (lineContent.Length >= GuidHelperConstants.Regexlength + relativeLineOfset && GuidHelperConstants.GuidRex.IsMatch(lineContent, relativeLineOfset));
+					if (!isMatch)
 						return;
 
 					var end = new Position(absolutePosOfLine.Value + relativeLineOfset + GuidHelperConstants.Regexlength);
@@ -64,11 +62,10 @@ namespace Kbg.NppPluginNET.GuidHelper
 
 				case GuidHelperConstants.EndPartOfGuidLength:
 				{
-					var canLineFitAGuid = relativeLineOfset >= LengthGuidExceptLastPart
-					                      && lineContent.Length >= GuidHelperConstants.Regexlength;
-					var isGuid = GuidHelperConstants.GuidRex.IsMatch(lineContent, relativeLineOfset - LengthGuidExceptLastPart);
-
-					if (!canLineFitAGuid || !isGuid)
+					var isMatch = relativeLineOfset >= LengthGuidExceptLastPart
+						&& lineContent.Length >= GuidHelperConstants.Regexlength  
+						&& GuidHelperConstants.GuidRex.IsMatch(lineContent, relativeLineOfset - LengthGuidExceptLastPart);
+					if (!isMatch)
 						return;
 
 					var finalStartSelection = new Position(absolutePosStart.Value - LengthGuidExceptLastPart);
