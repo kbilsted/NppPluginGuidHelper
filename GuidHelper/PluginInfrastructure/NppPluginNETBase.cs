@@ -13,17 +13,17 @@ namespace Kbg.NppPluginNET
         {
             SetCommand(index, commandName, functionPointer, new ShortcutKey(), false);
         }
-		
+        
         internal static void SetCommand(int index, string commandName, NppFuncItemDelegate functionPointer, ShortcutKey shortcut)
         {
             SetCommand(index, commandName, functionPointer, shortcut, false);
         }
-		
+        
         internal static void SetCommand(int index, string commandName, NppFuncItemDelegate functionPointer, bool checkOnInit)
         {
             SetCommand(index, commandName, functionPointer, new ShortcutKey(), checkOnInit);
         }
-		
+        
         internal static void SetCommand(int index, string commandName, NppFuncItemDelegate functionPointer, ShortcutKey shortcut, bool checkOnInit)
         {
             FuncItem funcItem = new FuncItem();
@@ -37,18 +37,19 @@ namespace Kbg.NppPluginNET
             _funcItems.Add(funcItem);
         }
 
-        public static IntPtr GetCurrentScintilla()
+        internal static IntPtr GetCurrentScintilla()
         {
             int curScintilla;
             Win32.SendMessage(nppData._nppHandle, NppMsg.NPPM_GETCURRENTSCINTILLA, 0, out curScintilla);
             return (curScintilla == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
         }
 
-		static readonly Func<IScintillaGateway> gatewayFactory = () => new ScintillaGateway(GetCurrentScintilla());
 
-		public static Func<IScintillaGateway> GetGatewayFactory()
-	    {
-		    return gatewayFactory;
-	    }
+        static readonly Func<IScintillaGateway> gatewayFactory = () => new ScintillaGateway(GetCurrentScintilla());
+
+        public static Func<IScintillaGateway> GetGatewayFactory()
+        {
+            return gatewayFactory;
+        }
     }
 }
