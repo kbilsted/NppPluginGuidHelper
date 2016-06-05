@@ -24,15 +24,15 @@ namespace Kbg.NppPluginNET
 
 		private static void ShowAbout()
 		{
-			var message = @"Version: 1.0
+			var message = @"Version: 1.01
 
 License: This is freeware (Apache v2.0 license).
 
 Author: Kasper B. Graversen 2016-
 
 Website: https://github.com/kbilsted/NppPluginGuidHelper";
-
-			MessageBox.Show("GuidHelper plugin", message, MessageBoxButtons.OK);
+			var title = "GuidHelper plugin";
+			MessageBox.Show(message, title, MessageBoxButtons.OK);
 		}
 
 		internal static void SetToolBarIcon()
