@@ -10,6 +10,8 @@ It currently features
 <img src="demo.gif">
 
 ## Installation
+This plugin is too new to have been added to the notepad++ pluginmanager - that takes a couple of months to get in place. So manual installation only.
+
 Download a binary release and stick the `GuidHelper.dll` inside the `c:\program files (x86)\notepad++\plugins\` folder.
 
 Alternatively, download the source and build it - the build will copy the dll to the notepad folder.

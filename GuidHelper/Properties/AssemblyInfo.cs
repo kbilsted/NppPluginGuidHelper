@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("GuidHelper")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MyName")]
+[assembly: AssemblyCompany("Kasper B. Graversen")]
 [assembly: AssemblyProduct("GuidHelper")]
-[assembly: AssemblyCopyright("Copyright © MyName 2011")]
+[assembly: AssemblyCopyright("Copyright © Kasper B. Graversen 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
