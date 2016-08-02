@@ -53,9 +53,11 @@ namespace Kbg.NppPluginNET.GuidHelper
 		private void LastPartOfGuidPossiblySelected(int relativeLineOfset, string lineContent, Position absolutePosStart,
 			bool isLeftToRigthSelection, IScintillaGateway scintillaGateway)
 		{
-			var isMatch = relativeLineOfset >= LengthGuidExceptLastPart
-			              && lineContent.Length >= GuidHelperConstants.Regexlength
-			              && GuidHelperConstants.GuidRex.IsMatch(lineContent, relativeLineOfset - LengthGuidExceptLastPart);
+			var canLineFitGuid = relativeLineOfset >= LengthGuidExceptLastPart
+			        && lineContent.Length >= GuidHelperConstants.Regexlength;
+
+			var isMatch = canLineFitGuid
+			              && GuidHelperConstants.GuidRex.IsMatch(lineContent.Substring(relativeLineOfset - LengthGuidExceptLastPart));
 			if (!isMatch)
 				return;
 
@@ -78,7 +80,7 @@ namespace Kbg.NppPluginNET.GuidHelper
 			IScintillaGateway scintillaGateway, Position absolutePosStart)
 		{
 			var isMatch = lineContent.Length >= GuidHelperConstants.Regexlength + relativeLineOfset 
-							&& GuidHelperConstants.GuidRex.IsMatch(lineContent, relativeLineOfset);
+							&& GuidHelperConstants.GuidRex.IsMatch(lineContent.Substring(relativeLineOfset));
 			if (!isMatch)
 				return;
 
