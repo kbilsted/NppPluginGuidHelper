@@ -1,8 +1,7 @@
-﻿// NPP plugin platform for .Net v0.90 by Kasper B. Graversen etc.
+﻿// NPP plugin platform for .Net v0.93.87 by Kasper B. Graversen etc.
 using System;
-using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace Kbg.NppPluginNET
+namespace Kbg.NppPluginNET.PluginInfrastructure
 {
     class PluginBase
     {
@@ -40,7 +39,7 @@ namespace Kbg.NppPluginNET
         internal static IntPtr GetCurrentScintilla()
         {
             int curScintilla;
-            Win32.SendMessage(nppData._nppHandle, NppMsg.NPPM_GETCURRENTSCINTILLA, 0, out curScintilla);
+            Win32.SendMessage(nppData._nppHandle, (uint) NppMsg.NPPM_GETCURRENTSCINTILLA, 0, out curScintilla);
             return (curScintilla == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
         }
 

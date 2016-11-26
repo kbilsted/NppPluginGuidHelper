@@ -24,7 +24,7 @@ namespace Kbg.NppPluginNET
 
 		private static void ShowAbout()
 		{
-			var message = @"Version: 1.02
+			var message = @"Version: 1.03
 
 License: This is freeware (Apache v2.0 license).
 

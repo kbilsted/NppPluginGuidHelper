@@ -1,10 +1,9 @@
-﻿// NPP plugin platform for .Net v0.90 by Kasper B. Graversen etc.
+﻿// NPP plugin platform for .Net v0.93.87 by Kasper B. Graversen etc.
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace Kbg.NppPluginNET
+namespace Kbg.NppPluginNET.PluginInfrastructure
 {
     /// <summary>
     /// Colours are set using the RGB format (Red, Green, Blue). The intensity of each colour is set in the range 0 to 255.
@@ -88,7 +87,13 @@ namespace Kbg.NppPluginNET
 
         public static bool operator ==(Position a, Position b)
         {
-            return ReferenceEquals(a, b) || a.pos == b.pos;
+	        if (ReferenceEquals(a, b))
+		        return true;
+			if (ReferenceEquals(a, null))
+				return false;
+			if (ReferenceEquals(b, null))
+				return false;
+			return  a.pos == b.pos;
         }
 
         public static bool operator !=(Position a, Position b)
