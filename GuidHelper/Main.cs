@@ -19,12 +19,13 @@ namespace Kbg.NppPluginNET
 		internal static void CommandMenuInit()
 		{
 			PluginBase.SetCommand(0, "&Insert Guid", InsertGuid, new ShortcutKey(false, false, false, Keys.None));
-			PluginBase.SetCommand(1, "&About GuidHelper", ShowAbout, new ShortcutKey(false, false, false, Keys.None));
+			PluginBase.SetCommand(1, "&Insert GUID", InsertUpperCaseGuid, new ShortcutKey(false, false, false, Keys.None));
+			PluginBase.SetCommand(2, "&About GuidHelper", ShowAbout, new ShortcutKey(false, false, false, Keys.None));
 		}
 
 		private static void ShowAbout()
 		{
-			var message = @"Version: 1.03
+			var message = @"Version: 1.04
 
 License: This is freeware (Apache v2.0 license).
 
@@ -43,9 +44,14 @@ Website: https://github.com/kbilsted/NppPluginGuidHelper";
 		{
 		}
 
+		internal static void InsertUpperCaseGuid()
+		{
+			new InsertGuid(new ScintillaGateway(PluginBase.GetCurrentScintilla())).Execute(true);
+		}
+
 		internal static void InsertGuid()
 		{
-			new InsertGuid(new ScintillaGateway(PluginBase.GetCurrentScintilla())).Execute();
+			new InsertGuid(new ScintillaGateway(PluginBase.GetCurrentScintilla())).Execute(false);
 		}
 	}
 }

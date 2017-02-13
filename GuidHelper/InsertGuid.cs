@@ -14,11 +14,11 @@ namespace Kbg.NppPluginNET.GuidHelper
 			this.scintilla = scintilla;
 		}
 
-		public void Execute()
+		public void Execute(bool makeUppercase)
 		{
 			scintilla.BeginUndoAction();
 			var selections = GetSelections();
-			var sumChanges = InsertGuids(selections);
+			var sumChanges = InsertGuids(selections, makeUppercase);
 			scintilla.EndUndoAction();
 
 			var first = selections.First();
@@ -26,12 +26,13 @@ namespace Kbg.NppPluginNET.GuidHelper
 			scintilla.GotoPos(first.Item1 + totalDelta);
 		}
 
-		private int InsertGuids(Tuple<Position, int>[] selections)
+		private int InsertGuids(Tuple<Position, int>[] selections, bool makeUppercase)
 		{
 			var sumChanges = selections.Sum(x =>
 			{
+				var guid = makeUppercase ?  Guid.NewGuid().ToString().ToUpper() : Guid.NewGuid().ToString();
 				scintilla.DeleteRange(x.Item1, x.Item2);
-				scintilla.InsertText(x.Item1, Guid.NewGuid().ToString());
+				scintilla.InsertText(x.Item1, guid);
 
 				return GuidHelperConstants.Regexlength - x.Item2;
 			});
