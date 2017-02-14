@@ -1,0 +1,55 @@
+name: CI_build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        build_configuration: [Release, Debug]
+        build_platform: [x64, Any CPU]
+        
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1
+
+    - name: MSBuild of plugin dll
+      working-directory: .
+      run: msbuild GuidHelper.sln /m /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}"
+
+    - uses: olegtarasov/get-tag@v2.1.2
+      id: tagName
+
+    - name: zip artifacts for x64
+      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+      run: 7z a GuidHelper_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip .\GuidHelper\bin\${{ matrix.build_platform }}\${{ matrix.build_configuration }}\GuidHelper.dll
+
+    - name: Archive artifacts for x64
+      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+      uses: actions/upload-artifact@v3
+      with:
+          name: GuidHelper_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+          path: GuidHelper_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+
+    - name: zip artifacts for Any CPU
+      if: matrix.build_platform == 'Any CPU' && matrix.build_configuration == 'Release'
+      run: 7z a GuidHelper_${{ steps.tagName.outputs.tag }}_x86.zip .\GuidHelper\bin\${{ matrix.build_configuration }}\GuidHelper.dll
+
+    - name: Archive artifacts for Any CPU
+      if: matrix.build_platform == 'Any CPU' && matrix.build_configuration == 'Release'
+      uses: actions/upload-artifact@v3
+      with:
+          name: GuidHelper_${{ steps.tagName.outputs.tag }}_x86.zip
+          path: GuidHelper_${{ steps.tagName.outputs.tag }}_x86.zip
+
+    - name: Create release on tagging
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+          files: GuidHelper_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+
